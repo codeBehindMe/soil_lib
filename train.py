@@ -14,19 +14,6 @@ def load_data(path: str) -> pd.DataFrame:
     return pd.read_csv(path)
 
 
-def create_training_package(
-    df: pd.DataFrame, id_col: str, wl_col_identifier: str
-) -> pd.DataFrame:
-    """
-    Use only the spectrometry for clustering.
-
-    Removes other unrequired columns.
-    """
-    wl_cols = filter(lambda x: x.startswith(wl_col_identifier), df.columns.values)
-
-    return df[wl_cols]
-
-
 def train_model(train_pack: pd.DataFrame, **k_means_args) -> KMeans:
 
     mdl = KMeans(**k_means_args)

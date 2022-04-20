@@ -3,9 +3,10 @@ import pandas as pd
 from sklearn.cluster import KMeans
 import plotly.express as px
 
-df = pd.read_csv("training.csv")
+from src.utils import filter_wavelength_columns, load_model
+from src.constants import K_MEANS_MODEL_PATH
 
-df = df.head(5)
+train_df = pd.read_csv("training.csv")
 
 
 def plot_spectrometry(df: pd.DataFrame):
@@ -17,8 +18,21 @@ def plot_spectrometry(df: pd.DataFrame):
     return px.line(df_melt, x="variable", y="value", color="PIDN")
 
 
+def create_library(train_df: pd.DataFrame, model: KMeans) -> pd.DataFrame:
+    predict_df = filter_wavelength_columns(train_df)
+
+    return_df = train_df.copy(deep=True)
+    return_df["CLASS"] = model.predict(predict_df)
+
+    return return_df
+
+
 if __name__ == "__main__":
     st.title("Spectroscopy library")
 
-    st.selectbox("Select Sample", df["PIDN"].values)
-    st.plotly_chart(plot_spectrometry(df))
+    mdl = load_model(K_MEANS_MODEL_PATH)
+    soil_lib = create_library(train_df, mdl)
+
+    st.write(soil_lib)
+    st.selectbox("Select Sample", train_df["PIDN"].values)
+    # st.plotly_chart(plot_spectrometry(df))

@@ -1,4 +1,4 @@
 PATH_TO_TRAINING_SET = "training.csv"
 ID_COL = "PIDN"
 WAVELENGTH_COL_IDENTIFIER = "m"
-K_MEANS_MODEL_PATH = "k_means_mdl"
+K_MEANS_MODEL_PATH = "k_means.mdl"
