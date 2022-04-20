@@ -1,6 +1,7 @@
 streamlit
 black
 numpy
+scipy
 pandas
 scikit-learn
 plotly
