@@ -1,13 +1,13 @@
 import pandas as pd
 from sklearn.cluster import KMeans
 from src.utils import save_model, filter_wavelength_columns
+from src.constants import (
+    PATH_TO_TRAINING_SET,
+    WAVELENGTH_COL_IDENTIFIER,
+    K_MEANS_MODEL_PATH,
+)
 
 # Trains a K Means model to cluster the data into groups
-
-
-PATH_TO_TRAINING_SET = "training.csv"
-ID_COL = "PIDN"
-WAVELENGTH_COL_IDENTIFIER = "m"
 
 
 def load_data(path: str) -> pd.DataFrame:
@@ -39,4 +39,4 @@ if __name__ == "__main__":
 
     mdl = train_model(train_x)
 
-    save_model(mdl, "k_means.mdl")
+    save_model(mdl, K_MEANS_MODEL_PATH)
