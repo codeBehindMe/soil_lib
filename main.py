@@ -19,6 +19,6 @@ def plot_spectrometry(df: pd.DataFrame):
 
 if __name__ == "__main__":
     st.title("Spectroscopy library")
-    
+
     st.selectbox("Select Sample", df["PIDN"].values)
     st.plotly_chart(plot_spectrometry(df))
