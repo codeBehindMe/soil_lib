@@ -1,0 +1,18 @@
+name: Build and deploy application
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    environment: production
+    env:
+      IMAGE_TAG: australia-southeast2-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/soil/soil_lib:latest
+    steps:
+      - name: Login to GAR
+        uses: docker/login-action@v1
+        with:
+          registry: australia-southeast2-docker.pkg.dev 
+          username: _json_key
+          password: ${{ secrets.GCP_SA_KEY }}
