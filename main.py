@@ -22,6 +22,7 @@ def plot_spectrometry(df: pd.DataFrame):
         y="value",
         color="PIDN",
         labels={"variable": "wavelength", "value": "reflectance"},
+        title="Spectrograph",
     )
 
 
@@ -59,6 +60,15 @@ def get_k_closest_from_lib(
     return class_df.sort_values("SCORES", ascending=False).head(k)
 
 
+def predict_soc(class_df: pd.DataFrame) -> float:
+
+    soc = class_df["SOC"].to_numpy().flatten()
+    scores = class_df["SCORES"].to_numpy().flatten()
+    weights = 1 / (1 + np.exp(-scores))
+
+    return np.mean(soc * weights)
+
+
 if __name__ == "__main__":
     train_df = pd.read_csv(PATH_TO_TRAINING_SET)
     test_df = pd.read_csv(PATH_TO_TEST_SET)
@@ -79,9 +89,10 @@ if __name__ == "__main__":
     selected_df = test_df[test_df["PIDN"] == selected_sample]
 
     col1.write(selected_df)
-    col1.plotly_chart(plot_spectrometry(selected_df), use_container_width=True)
-
     k_closest = get_k_closest_from_lib(selected_df, soil_lib, mdl)
+    col1.metric("Your Normalised SOC prediction", predict_soc(k_closest))
+
+    col1.plotly_chart(plot_spectrometry(selected_df), use_container_width=True)
 
     col2.header("Library Matches")
     col2.write(k_closest)
