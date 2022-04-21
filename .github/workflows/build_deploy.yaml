@@ -24,7 +24,7 @@ jobs:
       - name: Deploy cloud run service
         uses: google-github-actions/deploy-cloudrun@main
         with:
-          service: soillib
+          service: soil-lib
           image: ${{ env.IMAGE_TAG }}
           credentials: ${{ secrets.GCP_SA_KEY }}
           region: australia-southeast1
