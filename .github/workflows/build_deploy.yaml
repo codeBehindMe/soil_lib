@@ -16,3 +16,8 @@ jobs:
           registry: australia-southeast2-docker.pkg.dev 
           username: _json_key
           password: ${{ secrets.GCP_SA_KEY }}
+      - name: Build and push image to GAR
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: $${{ env.IMAGE_TAG }}
