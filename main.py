@@ -73,14 +73,14 @@ if __name__ == "__main__":
     col1, col2 = st.columns(2)
 
     col1.header("Your Data")
+    col1.info("We're pretending that you've already uploaded your spectrometry data")
 
-    selected_sample = col1.selectbox("Select Sample", test_df["PIDN"].values)
+    selected_sample = col1.selectbox("Select Sample ID", test_df["PIDN"].values)
     selected_df = test_df[test_df["PIDN"] == selected_sample]
 
     col1.write(selected_df)
     col1.plotly_chart(plot_spectrometry(selected_df), use_container_width=True)
 
-    # st.plotly_chart(plot_spectrometry(df))
     k_closest = get_k_closest_from_lib(selected_df, soil_lib, mdl)
 
     col2.header("Library Matches")
