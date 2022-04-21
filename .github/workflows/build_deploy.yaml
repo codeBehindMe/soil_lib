@@ -21,3 +21,10 @@ jobs:
         with:
           push: true
           tags: ${{ env.IMAGE_TAG }}
+      - name: Deploy cloud run service
+        uses: google-github-actions/deploy-cloudrun@main
+        with:
+          service: soillib
+          image: ${{ env.IMAGE_TAG }}
+          credentials: ${{ secrets.GCP_SA_KEY }}
+          region: australia-southeast1
